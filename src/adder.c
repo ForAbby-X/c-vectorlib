@@ -6,7 +6,7 @@
 /*   By: alde-fre <alde-fre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 15:20:39 by alde-fre          #+#    #+#             */
-/*   Updated: 2023/05/20 00:20:06 by alde-fre         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:10:54 by olimarti          ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_object	vector_addback(t_vector *const vector, t_object object)
 {
 	if (vector->size + 1 > vector->capacity)
-		if (vector_resize(vector, vector->capacity + vector->capacity / 2))
+		if (vector_reserve(vector, vector->capacity + vector->capacity / 2))
 			return (NULL);
 	vector->copy_method(vector->data + vector->type_size * vector->size,
 		object, vector->type_size);
@@ -26,7 +26,7 @@ t_object	vector_addback(t_vector *const vector, t_object object)
 t_object	vector_addfront(t_vector *const vector, t_object object)
 {
 	if (vector->size + 1 > vector->capacity)
-		if (vector_resize(vector, vector->capacity + vector->capacity / 2))
+		if (vector_reserve(vector, vector->capacity + vector->capacity / 2))
 			return (NULL);
 	_vec_memmov(vector->data + vector->type_size, vector->data,
 		vector->type_size * vector->size);
@@ -41,7 +41,7 @@ t_object	vector_insert(
 				t_length const index)
 {
 	if (vector->size + 1 > vector->capacity)
-		if (vector_resize(vector, vector->capacity + vector->capacity / 2))
+		if (vector_reserve(vector, vector->capacity + vector->capacity / 2))
 			return (NULL);
 	_vec_memmov(
 		vector->data + vector->type_size * (index + 1),
